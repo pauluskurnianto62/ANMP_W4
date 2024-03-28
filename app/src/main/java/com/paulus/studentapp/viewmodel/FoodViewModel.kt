@@ -10,31 +10,31 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.paulus.studentapp.model.Student
+import com.paulus.studentapp.model.Food
 
-class ListViewModel(application: Application): AndroidViewModel(application) {
-    val studentsLD = MutableLiveData<ArrayList<Student>>()
-    val studentLoadErrorLD = MutableLiveData<Boolean>()
+class FoodViewModel (application: Application): AndroidViewModel(application){
+    val foodLD = MutableLiveData<ArrayList<Food>>()
+    val foodLoadErrorLD = MutableLiveData<Boolean>()
     val loadingLD = MutableLiveData<Boolean>()
 
     val TAG = "volleyTag"
     private var queue: RequestQueue? = null
 
     fun refresh() {
-        studentLoadErrorLD.value = false
+        foodLoadErrorLD.value = false
         loadingLD.value = true
 
         queue = Volley.newRequestQueue(getApplication())
-        val url = "http://adv.jitusolution.com/student.php"
+        val url = "http://10.0.2.2/foods/foods.json"
 
         val stringRequest = StringRequest(
             Request.Method.GET, url,
             {
                 loadingLD.value = false
+                val sType = object: TypeToken<List<Food>>() {}.type
+                val result = Gson().fromJson<List<Food>>(it, sType)
+                foodLD.value = result as ArrayList<Food>
                 Log.d("show_volley", it)
-                val sType = object:TypeToken<List<Student>>() {}.type
-                val result = Gson().fromJson<List<Student>>(it, sType)
-                studentsLD.value = result as ArrayList<Student>
             },
             {
                 loadingLD.value = false

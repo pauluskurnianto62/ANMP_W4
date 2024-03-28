@@ -9,66 +9,58 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.paulus.studentapp.R
+import com.paulus.studentapp.databinding.FragmentFoodListBinding
 import com.paulus.studentapp.databinding.FragmentStudentListBinding
+import com.paulus.studentapp.viewmodel.FoodViewModel
 import com.paulus.studentapp.viewmodel.ListViewModel
 
-class StudentListFragment : Fragment() {
-    private lateinit var viewModel: ListViewModel
-    private val studentListAdapter  = StudentListAdapter(arrayListOf())
-    private lateinit var binding:FragmentStudentListBinding
+
+class FoodListFragment : Fragment() {
+    private lateinit var viewModel: FoodViewModel
+    private val foodListAdapter  = FoodListAdapter(arrayListOf())
+    private lateinit var binding: FragmentFoodListBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentStudentListBinding.inflate(inflater,container, false)
+        binding = FragmentFoodListBinding.inflate(inflater,container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(ListViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(FoodViewModel::class.java)
         viewModel.refresh()
 
         binding.recView.layoutManager = LinearLayoutManager(context)
-        binding.recView.adapter = studentListAdapter
+        binding.recView.adapter = foodListAdapter
 
         observeViewModel()
-
-        binding.refreshLayout.setOnRefreshListener {
-            viewModel.refresh()
-            binding.recView.visibility = View.GONE
-            binding.txtError.visibility = View.GONE
-            binding.progressLoad.visibility = View.VISIBLE
-            binding.refreshLayout.isRefreshing = false
-        }
-
     }
 
     fun observeViewModel() {
-        viewModel.studentsLD.observe(viewLifecycleOwner, Observer {
-            studentListAdapter.updateStudentList(it)
+        viewModel.foodLD.observe(viewLifecycleOwner, Observer {
+            foodListAdapter.updateFoodList(it)
         })
 
-        viewModel.studentLoadErrorLD.observe(viewLifecycleOwner, Observer {
+        viewModel.foodLoadErrorLD.observe(viewLifecycleOwner, Observer {
             if(it == true) {
-                binding.txtError?.visibility = View.VISIBLE
+                binding.txtErrors?.visibility = View.VISIBLE
             } else {
-                binding.txtError?.visibility = View.GONE
+                binding.txtErrors?.visibility = View.GONE
             }
         })
 
         viewModel.loadingLD.observe(viewLifecycleOwner, Observer {
             if(it == true) {
                 binding.recView.visibility = View.GONE
-                binding.progressLoad.visibility = View.VISIBLE
+                binding.progressLoads.visibility = View.VISIBLE
             } else {
                 binding.recView.visibility = View.VISIBLE
-                binding.progressLoad.visibility = View.GONE
+                binding.progressLoads.visibility = View.GONE
             }
         })
     }
-
-
 }
