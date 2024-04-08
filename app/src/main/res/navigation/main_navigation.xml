@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/foodListFragment">
+    app:startDestination="@id/studentListFragment">
 
     <fragment
         android:id="@+id/studentListFragment"
@@ -18,7 +18,14 @@
         android:id="@+id/studentDetailFragment"
         android:name="com.paulus.studentapp.view.StudentDetailFragment"
         android:label="fragment_student_detail"
-        tools:layout="@layout/fragment_student_detail" />
+        tools:layout="@layout/fragment_student_detail" >
+        <action
+            android:id="@+id/actionStudentListFragment"
+            app:destination="@id/studentListFragment" />
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/foodListFragment"
         android:name="com.paulus.studentapp.view.FoodListFragment"
