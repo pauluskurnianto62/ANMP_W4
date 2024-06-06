@@ -1,71 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.StudentDetailFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+        <variable
+            name="student"
+            type="com.paulus.studentapp.model.Student" />
+        <variable
+            name="back_listener"
+            type="com.paulus.studentapp.view.ButtonBackClickListener" />
+        <variable
+            name="update_listener"
+            type="com.paulus.studentapp.view.ButtonUpdateClickListener" />
+        <variable
+            name="createnotif_listener"
+            type="com.paulus.studentapp.view.ButtonNotifClickListener" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        tools:context=".view.StudentDetailFragment">
 
-        <ImageView
-            android:id="@+id/imgStudentDetail"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher_foreground" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/txtID"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:ems="10"
-            android:hint="Student ID"
-            android:inputType="text" />
+            <ImageView
+                android:id="@+id/imgStudentDetail"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_foreground" />
 
-        <EditText
-            android:id="@+id/txtName"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:ems="10"
-            android:hint="Student Name"
-            android:inputType="text" />
+            <EditText
+                android:id="@+id/txtID"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:ems="10"
+                android:hint="Student ID"
+                android:text="@={student.id}"
+                android:inputType="text" />
 
-        <EditText
-            android:id="@+id/txtBod"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:ems="10"
-            android:hint="Birth of Date"
-            android:inputType="text" />
+            <EditText
+                android:id="@+id/txtName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:ems="10"
+                android:hint="Student Name"
+                android:text="@={student.name}"
+                android:inputType="text" />
 
-        <EditText
-            android:id="@+id/txtPhone"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:ems="10"
-            android:hint="Phone"
-            android:inputType="text" />
+            <EditText
+                android:id="@+id/txtBod"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:ems="10"
+                android:hint="Birth of Date"
+                android:text="@={student.dob}"
+                android:inputType="text" />
 
-        <Button
-            android:id="@+id/btnUpdate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Update" />
+            <EditText
+                android:id="@+id/txtPhone"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:ems="10"
+                android:hint="Phone"
+                android:text="@={student.phone}"
+                android:inputType="text" />
 
-        <Button
-            android:id="@+id/btnBack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Back" />
+            <Button
+                android:id="@+id/btnUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:onClick="@{update_listener::onButtonUpdateClick}"
+                android:text="Update" />
 
-    </LinearLayout>
-</FrameLayout>
+            <Button
+                android:id="@+id/btnCreateNotification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:onClick="@{createnotif_listener::onButtonNotifClick}"
+                android:text="Create Notification" />
+
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:onClick="@{back_listener::onButtonBackClick}"
+                android:text="Back" />
+
+        </LinearLayout>
+    </FrameLayout>
+</layout>
